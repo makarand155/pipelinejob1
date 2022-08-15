@@ -1,8 +1,19 @@
 pipeline {
-    agent any
+    agent none
+
+    environment {
+        BRANCH = 'main'
+        GIT_REPO = 'https://github.com/'makarand155/pipelinejob1.git
+    }
+
     stages {
-        stage('BUILD') {
+        stage('Build') {
+            agent any
+            environment {
+                BUILD_ENV = 'only_for_build_stage'
+            }
             steps {
+                git branch: env.BRANCH, url: env.GIT_REPO
                 sh '''
                     #!/bin/bash 
                     pwd 
@@ -12,24 +23,14 @@ pipeline {
                 '''  
             }
         }
+
         stage('DEPLOY') {
+            agent { label 'c-node' } 
             steps {
                 echo "This is a DEPLOY stage"
                 sh 'sleep 5'
-            }
-        }
-        stage('TESTING1') {
-            steps {
-                sh 'echo "This is a TESTING1 stage"'
-                sh 'sleep 5'
-            }
-        }
-        stage('TESTING2') {
-            steps {
-                sh '''
-                    echo "This is a TESTING2 stage"
-                    sleep 5
-                '''
+                echo "$BRANCH $GIT_REPO"
+                echo "$BUILD_ENV"
             }
         }
     }
