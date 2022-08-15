@@ -23,7 +23,7 @@ pipeline {
                 stage('TESTING1') {
                     agent { label 'c-node' } 
                     steps {
-                        sh echo "This is a TESTING1 stage"
+                        sh 'echo "This is a TESTING1 stage"'
                     }
                 }
                 stage('TESTING2') {
