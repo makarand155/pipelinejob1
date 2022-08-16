@@ -1,7 +1,7 @@
 pipeline {
     agent none 
     stages {
-            stage('TESTING') {
+        stage('TESTING') {
             parallel {
                 stage('TESTING1') {
                     agent { label 'master' } 
@@ -18,8 +18,8 @@ pipeline {
                             sleep 5
                         '''
                     }
-                  }
                 }
-              }
-           }
-        }
+            }    
+        }    
+    }     
+}
